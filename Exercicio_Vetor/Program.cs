@@ -153,9 +153,9 @@ internal class Program
 
         void ordenaC(int[] c)
         {
-            int aux, menor;
+            int aux;
             
-            for(int i=0; i < c.Length; i++)
+            for(int i=0; i < c.Length-1; i++)
             {
                 for(int j = i+1; j < c.Length; j++)
                 {
