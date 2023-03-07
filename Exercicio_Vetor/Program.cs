@@ -32,16 +32,21 @@ internal class Program
             Console.WriteLine("6- Imprimir B");
             Console.WriteLine("7- Imprimir C");
             Console.WriteLine("8- Sair ");
-            esc=int.Parse(Console.ReadLine());
+
+            while (int.TryParse(Console.ReadLine(), out esc) == false)
+            {
+                Console.WriteLine("Nao eh um numero");
+                Console.WriteLine("digite um numero: ");
+            }
 
             switch (esc)
             {
                 case 1:
-                    LerA();
+                    LerVet(a);
                     break;
 
                 case 2:
-                    LerB();
+                    LerVet(b);
                     break;
 
                 case 3:
@@ -113,27 +118,17 @@ internal class Program
 
 
 
-        void LerA()
+        void LerVet(int[] v)
         {
-            for(int i=0; i<a.Length; i++)
+            for(int i=0; i<v.Length; i++)
             {
                 Console.WriteLine("informe o valor da posicao "+(i+1)+" do vetor A: ");
-                a[i] = int.Parse(Console.ReadLine());
+                v[i] = int.Parse(Console.ReadLine());
             }
             state1 = true;
             Console.Clear();
         }
 
-        void LerB()
-        {
-            for (int i = 0; i < b.Length; i++)
-            {
-                Console.WriteLine("informe o valor da posicao " + (i + 1) + " do vetor B: ");
-                b[i] = int.Parse(Console.ReadLine());
-            }
-            state2 = true;
-            Console.Clear();
-        }
 
 
         void UnirEmC(int[] vet)
