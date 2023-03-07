@@ -8,12 +8,11 @@ internal class Program
         int[] b = new int[5];
         int[] c = new int[10];
         int esc=0;
-        bool state1 = false;
+        int state1 = 0;
         bool state2 = false;
-        bool state3 = false;
 
 
-        while (esc!=7)
+        while (esc!=8)
         {
             Menu();
         }
@@ -25,11 +24,12 @@ internal class Program
         {
             Console.WriteLine("1- inserir valores em A");
             Console.WriteLine("2- inserir valores em B");
-            Console.WriteLine("3- Unir A a C ");
+            Console.WriteLine("3- Unir em C ");
             Console.WriteLine("4- Imprimir A");
             Console.WriteLine("5- Imprimir B");
             Console.WriteLine("6- Imprimir C");
-            Console.WriteLine("7- Sair ");
+            Console.WriteLine("7- Ordenar C");
+            Console.WriteLine("8- Sair ");
 
             while (int.TryParse(Console.ReadLine(), out esc) == false)
             {
@@ -40,15 +40,15 @@ internal class Program
             switch (esc)
             {
                 case 1:
-                    LerVet(a);
+                    LerVet(a, 'A');
                     break;
 
                 case 2:
-                    LerVet(b);
+                    LerVet(b, 'B');
                     break;
 
                 case 3:
-                    if (state1 == false || state2 == false)
+                    if (state1 < 2)
                     {
                         Console.WriteLine("A ou B nao foi alterado");
                     }
@@ -60,41 +60,42 @@ internal class Program
                     break;
 
                 case 4:
-                    if (state1)
-                    {
+                    
                         ImprimeVet(a, 'A');
-                    }
-                    else
-                    {
-                        Console.WriteLine("A nao foi alterado");
-                    }
+                   
                     break;
 
                 case 5:
-                    if (state1)
-                    {
-                        ImprimeVet(b, 'B');
-                    }
-                    else
-                    {
-                        Console.WriteLine("A nao foi alterado");
-                    }
-                    
+
+                    ImprimeVet(b, 'B');
+
+
                     break;
 
                 case 6:
-                    if (state3)
+                    if (state2)
                     {
                         ImprimeVet(c, 'C');
                     }
                     else
                     {
-                        Console.WriteLine("A nao foi alterado");
+                        Console.WriteLine("C ainda nao existe");
                     }
                     
                     break;
-
                 case 7:
+                    if (state2)
+                    {
+                        ordenaC(c);
+                    }
+                    else
+                    {
+                        Console.WriteLine("A nao foi alterado");
+                    }
+
+                    break;
+
+                case 8:
                     Console.WriteLine("Saindo");
                     break;
                 default:
@@ -105,14 +106,14 @@ internal class Program
 
 
 
-        void LerVet(int[] v)
+        void LerVet(int[] v, char letra)
         {
             for(int i=0; i<v.Length; i++)
             {
-                Console.WriteLine("informe o valor da posicao "+(i+1)+" do vetor A: ");
+                Console.WriteLine("informe o valor da posicao "+(i+1)+" do vetor "+letra+": ");
                 v[i] = int.Parse(Console.ReadLine());
             }
-            state1 = true;
+            state1++;
             Console.Clear();
         }
 
@@ -120,19 +121,20 @@ internal class Program
 
         void UnirEmC(int[]c, int[] vet, int[] vet2)
         {
+           
             for(int i = 0; i < c.Length; i++)
             {
-                if (i < vet.Length - 1)
+                if (i <= vet.Length - 1)
                 {
                     c[i] = vet[i];
                 }
                 else
                 {
-                    c[i] = vet2[i];
+                    c[i] = vet2[i-5];
                 }
             }
 
-            state3 = true;
+            state2 = true;
             Console.Clear();
         }
 
@@ -146,6 +148,25 @@ internal class Program
             }
             Console.WriteLine();
 
+        }
+
+
+        void ordenaC(int[] c)
+        {
+            int aux, menor;
+            
+            for(int i=0; i < c.Length; i++)
+            {
+                for(int j = i+1; j < c.Length; j++)
+                {
+                    if (c[i] > c[j])
+                    {
+                        aux= c[i];
+                        c[i]= c[j];
+                        c[j]= aux;
+                    }
+                }
+            }
         }
     }
 }
