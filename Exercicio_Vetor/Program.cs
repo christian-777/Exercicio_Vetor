@@ -7,14 +7,13 @@ internal class Program
         int[] a = new int[5];
         int[] b = new int[5];
         int[] c = new int[10];
-        int prox=0;
         int esc=0;
         bool state1 = false;
         bool state2 = false;
         bool state3 = false;
 
 
-        while (esc!=8)
+        while (esc!=7)
         {
             Menu();
         }
@@ -27,11 +26,10 @@ internal class Program
             Console.WriteLine("1- inserir valores em A");
             Console.WriteLine("2- inserir valores em B");
             Console.WriteLine("3- Unir A a C ");
-            Console.WriteLine("4- Unir B a C ");
-            Console.WriteLine("5- Imprimir A");
-            Console.WriteLine("6- Imprimir B");
-            Console.WriteLine("7- Imprimir C");
-            Console.WriteLine("8- Sair ");
+            Console.WriteLine("4- Imprimir A");
+            Console.WriteLine("5- Imprimir B");
+            Console.WriteLine("6- Imprimir C");
+            Console.WriteLine("7- Sair ");
 
             while (int.TryParse(Console.ReadLine(), out esc) == false)
             {
@@ -50,29 +48,18 @@ internal class Program
                     break;
 
                 case 3:
-                    if(state1)
+                    if (state1 == false || state2 == false)
                     {
-                        UnirEmC(a);
+                        Console.WriteLine("A ou B nao foi alterado");
                     }
                     else
                     {
-                        Console.WriteLine("A nao foi alterado");
+                        UnirEmC(c, a, b);
                     }
                     
                     break;
 
                 case 4:
-                    if (state2)
-                    {
-                        UnirEmC(b);
-                    }
-                    else
-                    {
-                        Console.WriteLine("B nao foi alterado");
-                    }
-                    break;
-
-                case 5:
                     if (state1)
                     {
                         ImprimeVet(a, 'A');
@@ -83,7 +70,7 @@ internal class Program
                     }
                     break;
 
-                case 6:
+                case 5:
                     if (state1)
                     {
                         ImprimeVet(b, 'B');
@@ -95,7 +82,7 @@ internal class Program
                     
                     break;
 
-                case 7:
+                case 6:
                     if (state3)
                     {
                         ImprimeVet(c, 'C');
@@ -107,7 +94,7 @@ internal class Program
                     
                     break;
 
-                case 8:
+                case 7:
                     Console.WriteLine("Saindo");
                     break;
                 default:
@@ -131,13 +118,20 @@ internal class Program
 
 
 
-        void UnirEmC(int[] vet)
+        void UnirEmC(int[]c, int[] vet, int[] vet2)
         {
-            for(int i = 0; i < vet.Length; i++)
+            for(int i = 0; i < c.Length; i++)
             {
-                c[prox] = vet[i];
-                prox++;
+                if (i < vet.Length - 1)
+                {
+                    c[i] = vet[i];
+                }
+                else
+                {
+                    c[i] = vet2[i];
+                }
             }
+
             state3 = true;
             Console.Clear();
         }
